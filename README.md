@@ -73,12 +73,19 @@ fields, invalid roles, `createdAt` tampering, and client deletes denied).
 
 ## Deploy
 
+Set your production Firebase web config in `src/environments/environment.prod.ts`
+(Firebase console → Project settings → Your apps). The file is committed with placeholder
+values; to keep your real values out of git, tell git to ignore local changes to it:
+
+```bash
+git update-index --skip-worktree src/environments/environment.prod.ts
+```
+
+Then deploy (targets the Firebase project in `.firebaserc`):
+
 ```bash
 npm run deploy   # builds shared + app, then deploys rules, functions, and hosting
 ```
-
-Deploy targets the Firebase project in `.firebaserc`. Set the production Firebase config in
-`src/environments/environment.prod.ts` before building for production.
 
 ## Scripts
 
