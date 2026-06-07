@@ -2,10 +2,40 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
+
+    function isValidUsername(name) {
+      return name is string && name.size() >= 2 && name.size() <= 50;
+    }
+    function isValidRole(role) {
+      return role in ['Admin', 'Editor', 'Viewer'];
+    }
+    function isValidStatus(status) {
+      return status in ['enabled', 'disabled'];
+    }
+
     match /users/{id} {
-      allow read: if true;            // open list (no auth for this task)
-      allow create, update: if true;  // client add / edit / status toggle
-      allow delete: if false;         // Admin SDK (Cloud Function) only
+      allow read: if true; // open list (no auth for this task)
+
+      // Create: exactly the allowed fields (no PII), valid enums, server timestamps.
+      allow create: if request.resource.data.keys().hasOnly(
+            ['username', 'role', 'status', 'createdAt', 'updatedAt'])
+        && isValidUsername(request.resource.data.username)
+        && isValidRole(request.resource.data.role)
+        && request.resource.data.status == 'enabled'
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.updatedAt == request.time;
+
+      // Update: same shape; createdAt immutable; updatedAt is server time.
+      allow update: if request.resource.data.keys().hasOnly(
+            ['username', 'role', 'status', 'createdAt', 'updatedAt'])
+        && isValidUsername(request.resource.data.username)
+        && isValidRole(request.resource.data.role)
+        && isValidStatus(request.resource.data.status)
+        && request.resource.data.createdAt == resource.data.createdAt
+        && request.resource.data.updatedAt == request.time;
+
+      // Delete: Admin SDK (Cloud Function) only — never the client.
+      allow delete: if false;
     }
   }
 }
