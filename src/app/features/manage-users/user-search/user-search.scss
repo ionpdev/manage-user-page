@@ -1,0 +1,14 @@
+@use '../../../../styles/mixins';
+
+.search {
+  display: block;
+}
+
+.search__input {
+  @include mixins.control;
+  width: 100%;
+}
+
+.visually-hidden {
+  @include mixins.visually-hidden;
+}

@@ -10,12 +10,16 @@
   </section>
 
   <section class="card">
+    <app-user-search (termChange)="searchTerm.set($event)" />
+
     @if (userService.loading()) {
       <p class="loading">Loading…</p>
     } @else if (userService.users().length === 0) {
       <ui-empty-state>No users yet — add your first one.</ui-empty-state>
+    } @else if (visibleUsers().length === 0) {
+      <ui-empty-state>No users match “{{ searchTerm() }}”.</ui-empty-state>
     } @else {
-      <app-user-list [users]="userService.users()" />
+      <app-user-list [users]="visibleUsers()" />
     }
   </section>
 </main>

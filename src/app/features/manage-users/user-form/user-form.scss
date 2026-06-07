@@ -22,17 +22,7 @@
 }
 
 .control {
-  padding: var(--space-2) var(--space-3);
-  background: var(--background);
-  color: var(--foreground);
-  border: 1px solid var(--input);
-  border-radius: var(--radius-md);
-  transition: border-color 150ms ease;
-
-  &:focus-visible {
-    @include mixins.focus-ring;
-    border-color: var(--ring);
-  }
+  @include mixins.control;
 }
 
 .form__error {

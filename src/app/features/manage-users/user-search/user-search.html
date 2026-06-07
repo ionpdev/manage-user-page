@@ -1,0 +1,10 @@
+<label class="search">
+  <span class="visually-hidden">Search users</span>
+  <input
+    type="search"
+    class="search__input"
+    placeholder="Search by username or role…"
+    [value]="term()"
+    (input)="term.set($any($event.target).value)"
+  />
+</label>
