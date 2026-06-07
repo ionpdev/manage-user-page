@@ -1,0 +1,91 @@
+// Design tokens — single source of truth for color, type, spacing, radius, elevation.
+// Light is default; `.dark` on a root element switches mode.
+
+:root {
+  // surfaces & text
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.2101 0.0318 264.6645);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.2101 0.0318 264.6645);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.2101 0.0318 264.6645);
+  --muted: oklch(0.967 0.0029 264.5419);
+  --muted-foreground: oklch(0.551 0.0234 264.3637);
+
+  // brand / actions
+  --primary: oklch(0.6716 0.1368 48.513); // warm orange — primary buttons
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.536 0.0398 196.028); // muted teal — enabled/positive
+  --secondary-foreground: oklch(1 0 0);
+  --accent: oklch(0.9491 0 0); // neutral hover surface (not colorful)
+  --accent-foreground: oklch(0.2101 0.0318 264.6645);
+  --ring: oklch(0.6716 0.1368 48.513); // focus ring = primary
+
+  // lines
+  --border: oklch(0.9276 0.0058 264.5313);
+  --input: oklch(0.9276 0.0058 264.5313);
+
+  // destructive
+  --destructive: oklch(0.6368 0.2078 25.3313); // red — remove / errors
+  --destructive-foreground: oklch(0.9851 0 0);
+
+  // status semantics + soft fills (derived from existing tokens — no new hues)
+  --status-enabled: var(--secondary);
+  --status-disabled: var(--muted-foreground);
+  --primary-soft: color-mix(in oklab, var(--primary) 12%, transparent);
+  --secondary-soft: color-mix(in oklab, var(--secondary) 14%, transparent);
+  --destructive-soft: color-mix(in oklab, var(--destructive) 12%, transparent);
+
+  // type
+  --font-sans: 'Outfit', ui-sans-serif, system-ui, sans-serif;
+  --font-serif: 'Merriweather', ui-serif, serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  // radius
+  --radius: 0.75rem;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  // spacing (4px base)
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+
+  // elevation
+  --shadow-sm: 0px 1px 4px 0px hsl(0 0% 0% / 0.05), 0px 1px 2px -1px hsl(0 0% 0% / 0.05);
+  --shadow-md: 0px 1px 4px 0px hsl(0 0% 0% / 0.05), 0px 2px 4px -1px hsl(0 0% 0% / 0.05);
+  --shadow-lg: 0px 1px 4px 0px hsl(0 0% 0% / 0.05), 0px 4px 6px -1px hsl(0 0% 0% / 0.05);
+  --shadow-xl: 0px 1px 4px 0px hsl(0 0% 0% / 0.05), 0px 8px 10px -1px hsl(0 0% 0% / 0.05);
+}
+
+.dark {
+  --background: oklch(0.1797 0.0043 308.1928);
+  --foreground: oklch(0.8109 0 0);
+  --card: oklch(0.1822 0 0);
+  --card-foreground: oklch(0.8109 0 0);
+  --popover: oklch(0.1797 0.0043 308.1928);
+  --popover-foreground: oklch(0.8109 0 0);
+  --muted: oklch(0.252 0 0);
+  --muted-foreground: oklch(0.6268 0 0);
+
+  --primary: oklch(0.7214 0.1337 49.9802);
+  --primary-foreground: oklch(0.1797 0.0043 308.1928);
+  --secondary: oklch(0.594 0.0443 196.0233);
+  --secondary-foreground: oklch(0.1797 0.0043 308.1928);
+  --accent: oklch(0.3211 0 0);
+  --accent-foreground: oklch(0.8109 0 0);
+  --ring: oklch(0.7214 0.1337 49.9802);
+
+  --border: oklch(0.252 0 0);
+  --input: oklch(0.252 0 0);
+
+  // Deviation from source: keep destructive RED in dark so remove stays unmistakable.
+  --destructive: oklch(0.68 0.2 25.3313);
+  --destructive-foreground: oklch(0.9851 0 0);
+}

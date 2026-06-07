@@ -1,0 +1,12 @@
+// Sass-side helpers that mirror the CSS token scale, for use in component .scss.
+// The CSS custom properties in _tokens.scss remain the runtime source of truth.
+
+// Type scale (px)
+$text-display: 24px;
+$text-heading: 18px;
+$text-body: 14px;
+$text-label: 12px;
+$text-caption: 11px;
+
+// Breakpoint for the table → stacked-card reflow
+$bp-narrow: 640px;
