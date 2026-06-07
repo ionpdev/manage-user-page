@@ -1,22 +1,27 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { NewUser } from '@manage-users/shared';
 import { User } from '../../core/models/user.schema';
+import { ThemeService } from '../../core/services/theme.service';
 import { UserService } from '../../core/services/user.service';
 import { ConfirmDialog } from '../../shared/confirm-dialog/confirm-dialog';
+import { UiButton } from '../../shared/ui/button/button';
 import { UiEmptyState } from '../../shared/ui/empty-state/empty-state';
+import { ToastService } from '../../shared/ui/toast/toast.service';
 import { UserForm } from './user-form/user-form';
 import { UserList } from './user-list/user-list';
 import { UserSearch } from './user-search/user-search';
 
 @Component({
   selector: 'app-manage-users',
-  imports: [UserForm, UserSearch, UserList, UiEmptyState, ConfirmDialog],
+  imports: [UserForm, UserSearch, UserList, UiEmptyState, ConfirmDialog, UiButton],
   templateUrl: './manage-users.html',
   styleUrl: './manage-users.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ManageUsers {
   protected readonly userService = inject(UserService);
+  protected readonly theme = inject(ThemeService);
+  private readonly toast = inject(ToastService);
   protected readonly searchTerm = signal('');
   protected readonly editingId = signal<string | null>(null);
 
@@ -46,7 +51,10 @@ export class ManageUsers {
   protected onSubmit(data: NewUser): void {
     const id = this.editingId();
     const op = id ? this.userService.updateUser(id, data) : this.userService.addUser(data);
-    op.then(() => this.editingId.set(null)).catch((err) => console.error('Save failed', err));
+    op.then(() => {
+      this.editingId.set(null);
+      this.toast.success(id ? 'User updated' : 'User added');
+    }).catch(() => this.toast.error('Could not save user'));
   }
 
   protected startEdit(user: User): void {
@@ -59,7 +67,10 @@ export class ManageUsers {
 
   protected toggleStatus(user: User): void {
     const next = user.status === 'enabled' ? 'disabled' : 'enabled';
-    this.userService.setStatus(user.id, next).catch((err) => console.error('Toggle failed', err));
+    this.userService
+      .setStatus(user.id, next)
+      .then(() => this.toast.success(`User ${next}`))
+      .catch(() => this.toast.error('Could not update status'));
   }
 
   protected requestRemove(user: User): void {
@@ -77,8 +88,11 @@ export class ManageUsers {
     this.removePending.set(true);
     this.userService
       .removeUser(user.id)
-      .then(() => this.removing.set(null))
-      .catch((err) => console.error('Remove failed', err))
+      .then(() => {
+        this.removing.set(null);
+        this.toast.success('User removed');
+      })
+      .catch(() => this.toast.error('Could not remove user'))
       .finally(() => this.removePending.set(false));
   }
 }

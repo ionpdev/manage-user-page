@@ -1,3 +1,5 @@
+@use '../../../../styles/variables' as v;
+
 .table {
   width: 100%;
   border-collapse: collapse;
@@ -14,4 +16,16 @@ thead th {
 
 .th--actions {
   text-align: right;
+}
+
+// Narrow screens: hide the header; rows become stacked cards (see user-row).
+@media (max-width: v.$bp-narrow) {
+  thead {
+    display: none;
+  }
+
+  .table,
+  tbody {
+    display: block;
+  }
 }

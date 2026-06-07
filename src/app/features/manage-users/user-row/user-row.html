@@ -1,8 +1,14 @@
-<td class="cell cell--name">{{ user().username }}</td>
-<td>{{ user().role }}</td>
-<td><ui-badge [tone]="user().status">{{ user().status }}</ui-badge></td>
-<td class="cell--muted">{{ user().createdAt?.toDate() | date: 'medium' }}</td>
-<td class="cell--actions">
+<td class="cell cell--name" data-label="Username">{{ user().username }}</td>
+<td data-label="Role">{{ user().role }}</td>
+<td data-label="Status"><ui-badge [tone]="user().status">{{ user().status }}</ui-badge></td>
+<td
+  class="cell--muted"
+  data-label="Created"
+  [title]="user().createdAt?.toDate() | date: 'medium'"
+>
+  {{ user().createdAt | timeAgo }}
+</td>
+<td class="cell--actions" data-label="Actions">
   <button
     uiButton
     variant="ghost"

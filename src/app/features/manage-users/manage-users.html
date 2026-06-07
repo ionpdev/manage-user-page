@@ -2,6 +2,17 @@
   <header class="page__header">
     <h1>Manage Users</h1>
     <span class="count">{{ userService.users().length }} user(s)</span>
+    <button
+      uiButton
+      variant="ghost"
+      size="sm"
+      type="button"
+      class="theme-toggle"
+      [attr.aria-label]="theme.dark() ? 'Switch to light mode' : 'Switch to dark mode'"
+      (click)="theme.toggle()"
+    >
+      {{ theme.dark() ? '☀︎ Light' : '☾ Dark' }}
+    </button>
   </header>
 
   <section class="card">

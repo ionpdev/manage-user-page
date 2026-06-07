@@ -27,6 +27,10 @@
   font-size: 14px;
 }
 
+.theme-toggle {
+  margin-left: auto;
+}
+
 .card {
   @include mixins.card;
   padding: var(--space-5);
