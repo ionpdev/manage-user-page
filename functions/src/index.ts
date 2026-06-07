@@ -8,8 +8,12 @@ initializeApp();
 /**
  * Privileged user deletion. The only path that can delete a user — Firestore
  * rules deny client deletes, so removal must go through this callable.
+ *
+ * `invoker: 'public'` allows the unauthenticated client to call it (the app has
+ * no auth). Deletion is still gated server-side: only this function holds the
+ * Admin SDK privilege to delete, and it validates its input.
  */
-export const removeUser = onCall(async (request) => {
+export const removeUser = onCall({ invoker: 'public' }, async (request) => {
   const parsed = RemoveUserRequest.safeParse(request.data);
   if (!parsed.success) {
     throw new HttpsError('invalid-argument', 'userId is required');
