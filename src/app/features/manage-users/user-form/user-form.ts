@@ -2,9 +2,11 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  effect,
   input,
   linkedSignal,
   output,
+  untracked,
 } from '@angular/core';
 import { FormField, form, minLength, required } from '@angular/forms/signals';
 import { NewUser, UserRole } from '@manage-users/shared';
@@ -39,9 +41,21 @@ export class UserForm {
     required(path.role);
   });
 
+  constructor() {
+    // Switching between add/edit (or loading a different user) starts a fresh
+    // interaction: clear touched/dirty so validation errors don't show on a
+    // field the user hasn't touched yet. `reset()` (no value) leaves the model
+    // untouched — `linkedSignal` already supplies the right value.
+    effect(() => {
+      this.initial(); // re-run whenever the form's mode/target changes
+      untracked(() => this.userForm().reset());
+    });
+  }
+
   protected onSubmit(): void {
     if (this.userForm().invalid()) return;
     this.submitted.emit(this.model());
-    if (!this.editing()) this.model.set({ ...EMPTY });
+    // After an add, clear the value AND the touched/dirty state for the next entry.
+    if (!this.editing()) this.userForm().reset({ ...EMPTY });
   }
 }
