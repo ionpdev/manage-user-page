@@ -1,7 +1,19 @@
 <main class="page">
   <header class="page__header">
     <h1>Manage Users</h1>
+    <span class="count">{{ userService.users().length }} user(s)</span>
   </header>
 
-  <!-- Phase 3+: add-user form, search, and user list mount here -->
+  <!-- TEMP — Phase 2 zoneless verification; replaced by the real form in Phase 3. -->
+  <button type="button" class="temp-add" (click)="addSample()">+ Add sample user</button>
+
+  @if (userService.users().length === 0) {
+    <p class="empty">No users yet.</p>
+  } @else {
+    <ul class="list">
+      @for (u of userService.users(); track u.id) {
+        <li><strong>{{ u.username }}</strong> — {{ u.role }} <span>({{ u.status }})</span></li>
+      }
+    </ul>
+  }
 </main>

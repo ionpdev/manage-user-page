@@ -8,5 +8,7 @@ docs/
 node_modules/
 dist/
 .angular/
+
+# Firebase emulator
 .firebase/
-docs/
+*-debug.log
