@@ -1,0 +1,12 @@
+# Internal planning & architecture docs — kept local, not published
+docs/
+
+# OS
+.DS_Store
+
+# Dependencies & build output
+node_modules/
+dist/
+.angular/
+.firebase/
+docs/
