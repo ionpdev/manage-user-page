@@ -1,0 +1,15 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>Username</th>
+      <th>Role</th>
+      <th>Status</th>
+      <th>Created</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (u of users(); track u.id) {
+      <tr appUserRow [user]="u"></tr>
+    }
+  </tbody>
+</table>

@@ -1,10 +1,13 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { UserRole } from '@manage-users/shared';
+import { NewUser } from '@manage-users/shared';
 import { UserService } from '../../core/services/user.service';
+import { UiEmptyState } from '../../shared/ui/empty-state/empty-state';
+import { UserForm } from './user-form/user-form';
+import { UserList } from './user-list/user-list';
 
 @Component({
   selector: 'app-manage-users',
-  imports: [],
+  imports: [UserForm, UserList, UiEmptyState],
   templateUrl: './manage-users.html',
   styleUrl: './manage-users.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -12,10 +15,7 @@ import { UserService } from '../../core/services/user.service';
 export class ManageUsers {
   protected readonly userService = inject(UserService);
 
-  // TEMP — Phase 2 zoneless verification only; replaced by the real form in Phase 3.
-  protected addSample(): void {
-    const n = this.userService.users().length + 1;
-    const roles = UserRole.options;
-    void this.userService.addUser({ username: `user-${n}`, role: roles[n % roles.length] });
+  protected onAdd(user: NewUser): void {
+    this.userService.addUser(user).catch((err) => console.error('Failed to add user', err));
   }
 }

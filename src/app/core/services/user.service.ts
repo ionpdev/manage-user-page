@@ -1,4 +1,11 @@
-import { EnvironmentInjector, Injectable, Signal, inject, runInInjectionContext } from '@angular/core';
+import {
+  EnvironmentInjector,
+  Injectable,
+  Signal,
+  computed,
+  inject,
+  runInInjectionContext,
+} from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import {
   Firestore,
@@ -30,8 +37,8 @@ export class UserService {
   private readonly injector = inject(EnvironmentInjector);
   private readonly col = collection(this.fs, 'users');
 
-  /** Live collection as a signal (zoneless-safe), parsed at the boundary with UserSchema. */
-  readonly users: Signal<User[]> = toSignal(
+  /** Raw live collection signal: `undefined` until the first snapshot resolves. */
+  private readonly _users = toSignal(
     collectionData(query(this.col, orderBy('createdAt', 'desc')), { idField: 'id' }).pipe(
       map((rows) =>
         rows.flatMap((row) => {
@@ -44,8 +51,13 @@ export class UserService {
         }),
       ),
     ),
-    { initialValue: [] as User[] },
   );
+
+  /** Live users, parsed at the boundary with UserSchema. */
+  readonly users: Signal<User[]> = computed(() => this._users() ?? []);
+
+  /** True until the first snapshot has resolved. */
+  readonly loading: Signal<boolean> = computed(() => this._users() === undefined);
 
   addUser(input: NewUser) {
     const data = NewUserSchema.parse(input);

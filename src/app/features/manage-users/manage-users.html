@@ -4,16 +4,18 @@
     <span class="count">{{ userService.users().length }} user(s)</span>
   </header>
 
-  <!-- TEMP — Phase 2 zoneless verification; replaced by the real form in Phase 3. -->
-  <button type="button" class="temp-add" (click)="addSample()">+ Add sample user</button>
+  <section class="card">
+    <h2 class="card__title">Add user</h2>
+    <app-user-form (submitted)="onAdd($event)" />
+  </section>
 
-  @if (userService.users().length === 0) {
-    <p class="empty">No users yet.</p>
-  } @else {
-    <ul class="list">
-      @for (u of userService.users(); track u.id) {
-        <li><strong>{{ u.username }}</strong> — {{ u.role }} <span>({{ u.status }})</span></li>
-      }
-    </ul>
-  }
+  <section class="card">
+    @if (userService.loading()) {
+      <p class="loading">Loading…</p>
+    } @else if (userService.users().length === 0) {
+      <ui-empty-state>No users yet — add your first one.</ui-empty-state>
+    } @else {
+      <app-user-list [users]="userService.users()" />
+    }
+  </section>
 </main>

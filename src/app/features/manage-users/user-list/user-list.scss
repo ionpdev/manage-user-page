@@ -1,0 +1,13 @@
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead th {
+  padding: var(--space-2) var(--space-3);
+  text-align: left;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--muted-foreground);
+}

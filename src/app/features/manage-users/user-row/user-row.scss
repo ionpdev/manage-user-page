@@ -1,0 +1,19 @@
+:host {
+  border-top: 1px solid var(--border);
+}
+
+td {
+  padding: var(--space-3);
+  text-align: left;
+  vertical-align: middle;
+}
+
+.cell--name {
+  font-weight: 500;
+}
+
+.cell--muted {
+  color: var(--muted-foreground);
+  font-family: var(--font-mono);
+  font-size: 12px;
+}

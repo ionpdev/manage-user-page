@@ -1,0 +1,4 @@
+<td class="cell cell--name">{{ user().username }}</td>
+<td>{{ user().role }}</td>
+<td><ui-badge [tone]="user().status">{{ user().status }}</ui-badge></td>
+<td class="cell--muted">{{ user().createdAt?.toDate() | date: 'medium' }}</td>

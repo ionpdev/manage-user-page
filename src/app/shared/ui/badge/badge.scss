@@ -1,0 +1,24 @@
+.ui-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: capitalize;
+
+  &--enabled {
+    background: var(--secondary-soft);
+    color: var(--status-enabled);
+  }
+
+  &--disabled {
+    background: var(--muted);
+    color: var(--status-disabled);
+  }
+
+  &--neutral {
+    background: var(--muted);
+    color: var(--muted-foreground);
+  }
+}
