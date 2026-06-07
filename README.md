@@ -19,8 +19,66 @@ Removal runs through a Cloud Function.
 - **Deletion is function-only.** `removeUser` (Admin SDK) is the only delete path; Firestore
   rules deny client deletes.
 - **Single source of truth.** Zod schemas in `packages/shared` define the data model; types
-  are inferred and reused by the app and the functions.
-- **No PII.** A user is only `username`, `role`, `status`, and timestamps.
+  are inferred and reused by the app and the functions. The Cloud Function is bundled with
+  esbuild so that shared package is inlined at deploy time.
+- **No PII.** A user is only `username`, `role`, `status`, and timestamps — enforced both in
+  the schema and in the Firestore rules.
+
+## Project structure
+
+```
+src/app/
+  core/          services (UserService = the Firebase boundary) and models
+  features/      manage-users page + its form, list, row, and search
+  shared/        reusable UI (button, badge, dialog, toast) and pipes
+packages/shared/ Zod schemas + contracts shared by app and functions
+functions/       removeUser Cloud Function
+```
+
+## Prerequisites
+
+- **Node 22**
+- **Firebase CLI** — `npm i -g firebase-tools`
+- **Java 11+** — only needed to run the Firestore emulator locally
+
+## Getting started
+
+```bash
+npm install --legacy-peer-deps   # AngularFire 20 peers Angular 20; we run 22
+```
+
+Run the Firebase emulators (Firestore + Functions) in one terminal:
+
+```bash
+npm run emulators
+```
+
+Run the app in another (points at the emulators in development):
+
+```bash
+npm start
+```
+
+The app is served at `http://localhost:4200`.
+
+## Testing
+
+```bash
+npm test
+```
+
+Unit tests (Vitest) cover the Firestore-boundary schema parse and the search filter.
+Firestore security rules were verified against the emulator (valid writes allowed; PII
+fields, invalid roles, `createdAt` tampering, and client deletes denied).
+
+## Deploy
+
+```bash
+npm run deploy   # builds shared + app, then deploys rules, functions, and hosting
+```
+
+Deploy targets the Firebase project in `.firebaserc`. Set the production Firebase config in
+`src/environments/environment.prod.ts` before building for production.
 
 ## Scripts
 
@@ -31,7 +89,3 @@ Removal runs through a Cloud Function.
 | `npm test` | Unit tests (Vitest) |
 | `npm run emulators` | Firebase emulators (Firestore + Functions) |
 | `npm run deploy` | Build, then deploy rules + functions + hosting |
-
-## Status
-
-In development. Live URL to follow.
