@@ -27,7 +27,18 @@
         [users]="visibleUsers()"
         (edit)="startEdit($event)"
         (toggle)="toggleStatus($event)"
+        (remove)="requestRemove($event)"
       />
     }
   </section>
+
+  <app-confirm-dialog
+    [open]="!!removing()"
+    [pending]="removePending()"
+    title="Remove user"
+    [message]="'Remove “' + (removing()?.username ?? '') + '”? This cannot be undone.'"
+    confirmLabel="Remove"
+    (confirm)="confirmRemove()"
+    (cancel)="cancelRemove()"
+  />
 </main>

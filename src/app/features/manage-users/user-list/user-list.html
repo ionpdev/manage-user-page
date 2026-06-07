@@ -10,7 +10,13 @@
   </thead>
   <tbody>
     @for (u of users(); track u.id) {
-      <tr appUserRow [user]="u" (edit)="edit.emit($event)" (toggle)="toggle.emit($event)"></tr>
+      <tr
+        appUserRow
+        [user]="u"
+        (edit)="edit.emit($event)"
+        (toggle)="toggle.emit($event)"
+        (remove)="remove.emit($event)"
+      ></tr>
     }
   </tbody>
 </table>

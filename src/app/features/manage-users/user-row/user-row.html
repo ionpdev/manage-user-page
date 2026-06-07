@@ -23,4 +23,14 @@
   >
     {{ toggleLabel() }}
   </button>
+  <button
+    uiButton
+    variant="danger"
+    size="sm"
+    type="button"
+    [attr.aria-label]="'Remove ' + user().username"
+    (click)="remove.emit(user())"
+  >
+    Remove
+  </button>
 </td>

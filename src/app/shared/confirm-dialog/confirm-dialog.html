@@ -1,0 +1,14 @@
+<dialog #dialog class="dialog" (cancel)="$event.preventDefault(); cancel.emit()" (click)="onBackdrop($event)">
+  <h2 class="dialog__title">{{ title() }}</h2>
+  @if (message()) {
+    <p class="dialog__message">{{ message() }}</p>
+  }
+  <div class="dialog__actions">
+    <button uiButton variant="secondary" type="button" [disabled]="pending()" (click)="cancel.emit()">
+      Cancel
+    </button>
+    <button uiButton variant="danger" type="button" [disabled]="pending()" (click)="confirm.emit()">
+      {{ pending() ? 'Removing…' : confirmLabel() }}
+    </button>
+  </div>
+</dialog>

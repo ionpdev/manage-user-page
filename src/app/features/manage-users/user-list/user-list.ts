@@ -13,4 +13,5 @@ export class UserList {
   readonly users = input.required<User[]>();
   readonly edit = output<User>();
   readonly toggle = output<User>();
+  readonly remove = output<User>();
 }

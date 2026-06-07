@@ -4,16 +4,19 @@
   "private": true,
   "packageManager": "npm@10.9.8",
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "functions"
   ],
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:shared": "npm run build -w @manage-users/shared",
+    "build:functions": "npm run build -w functions",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "emulators": "firebase emulators:start",
-    "deploy": "npm run build && firebase deploy --only firestore:rules,functions,hosting"
+    "emulators": "npm run build:shared && npm run build:functions && firebase emulators:start --project demo-user-management-console",
+    "deploy": "npm run build:shared && npm run build && firebase deploy --only firestore:rules,functions,hosting"
   },
   "dependencies": {
     "@angular/common": "^22.0.0",

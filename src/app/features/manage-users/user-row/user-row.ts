@@ -16,6 +16,7 @@ export class UserRow {
   readonly user = input.required<User>();
   readonly edit = output<User>();
   readonly toggle = output<User>();
+  readonly remove = output<User>();
 
   protected readonly toggleLabel = computed(() =>
     this.user().status === 'enabled' ? 'Disable' : 'Enable',
