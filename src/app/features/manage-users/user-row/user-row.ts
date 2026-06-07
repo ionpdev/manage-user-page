@@ -1,15 +1,23 @@
 import { DatePipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 import { User } from '../../../core/models/user.schema';
 import { UiBadge } from '../../../shared/ui/badge/badge';
+import { UiButton } from '../../../shared/ui/button/button';
 
 @Component({
   selector: 'tr[appUserRow]',
-  imports: [UiBadge, DatePipe],
+  imports: [UiBadge, UiButton, DatePipe],
   templateUrl: './user-row.html',
   styleUrl: './user-row.scss',
+  host: { '[class.row--disabled]': "user().status === 'disabled'" },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserRow {
   readonly user = input.required<User>();
+  readonly edit = output<User>();
+  readonly toggle = output<User>();
+
+  protected readonly toggleLabel = computed(() =>
+    this.user().status === 'enabled' ? 'Disable' : 'Enable',
+  );
 }

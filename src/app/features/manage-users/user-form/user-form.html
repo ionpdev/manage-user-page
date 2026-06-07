@@ -22,5 +22,12 @@
     </select>
   </div>
 
-  <button uiButton type="submit" [disabled]="userForm().invalid()">Add user</button>
+  <div class="form__actions">
+    <button uiButton type="submit" [disabled]="userForm().invalid()">
+      {{ editing() ? 'Save' : 'Add user' }}
+    </button>
+    @if (editing()) {
+      <button uiButton variant="secondary" type="button" (click)="cancelled.emit()">Cancel</button>
+    }
+  </div>
 </form>

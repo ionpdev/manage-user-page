@@ -5,11 +5,12 @@
       <th>Role</th>
       <th>Status</th>
       <th>Created</th>
+      <th class="th--actions">Actions</th>
     </tr>
   </thead>
   <tbody>
     @for (u of users(); track u.id) {
-      <tr appUserRow [user]="u"></tr>
+      <tr appUserRow [user]="u" (edit)="edit.emit($event)" (toggle)="toggle.emit($event)"></tr>
     }
   </tbody>
 </table>

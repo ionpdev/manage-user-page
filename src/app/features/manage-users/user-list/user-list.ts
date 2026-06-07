@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { User } from '../../../core/models/user.schema';
 import { UserRow } from '../user-row/user-row';
 
@@ -11,4 +11,6 @@ import { UserRow } from '../user-row/user-row';
 })
 export class UserList {
   readonly users = input.required<User[]>();
+  readonly edit = output<User>();
+  readonly toggle = output<User>();
 }

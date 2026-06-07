@@ -5,8 +5,12 @@
   </header>
 
   <section class="card">
-    <h2 class="card__title">Add user</h2>
-    <app-user-form (submitted)="onAdd($event)" />
+    <h2 class="card__title">{{ editingId() ? 'Edit user' : 'Add user' }}</h2>
+    <app-user-form
+      [initial]="editingInitial()"
+      (submitted)="onSubmit($event)"
+      (cancelled)="cancelEdit()"
+    />
   </section>
 
   <section class="card">
@@ -19,7 +23,11 @@
     } @else if (visibleUsers().length === 0) {
       <ui-empty-state>No users match “{{ searchTerm() }}”.</ui-empty-state>
     } @else {
-      <app-user-list [users]="visibleUsers()" />
+      <app-user-list
+        [users]="visibleUsers()"
+        (edit)="startEdit($event)"
+        (toggle)="toggleStatus($event)"
+      />
     }
   </section>
 </main>

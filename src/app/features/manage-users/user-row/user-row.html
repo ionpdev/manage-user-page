@@ -2,3 +2,25 @@
 <td>{{ user().role }}</td>
 <td><ui-badge [tone]="user().status">{{ user().status }}</ui-badge></td>
 <td class="cell--muted">{{ user().createdAt?.toDate() | date: 'medium' }}</td>
+<td class="cell--actions">
+  <button
+    uiButton
+    variant="ghost"
+    size="sm"
+    type="button"
+    [attr.aria-label]="'Edit ' + user().username"
+    (click)="edit.emit(user())"
+  >
+    Edit
+  </button>
+  <button
+    uiButton
+    variant="ghost"
+    size="sm"
+    type="button"
+    [attr.aria-label]="toggleLabel() + ' ' + user().username"
+    (click)="toggle.emit(user())"
+  >
+    {{ toggleLabel() }}
+  </button>
+</td>
