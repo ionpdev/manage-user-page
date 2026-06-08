@@ -13,3 +13,6 @@ functions/lib/
 # Firebase emulator
 .firebase/
 *-debug.log
+
+# Local preview/dev tooling
+.claude/

@@ -1,4 +1,6 @@
-.ui-badge {
+// Selector is `ui-badge`, so the tone classes live on the HOST element —
+// style via `:host(...)` (content-scoped `.ui-badge` would not match the host).
+:host {
   display: inline-flex;
   align-items: center;
   padding: 2px var(--space-2);
@@ -6,19 +8,19 @@
   font-size: 12px;
   font-weight: 500;
   text-transform: capitalize;
+}
 
-  &--enabled {
-    background: var(--secondary-soft);
-    color: var(--status-enabled);
-  }
+:host(.ui-badge--enabled) {
+  background: var(--secondary-soft);
+  color: var(--status-enabled);
+}
 
-  &--disabled {
-    background: var(--muted);
-    color: var(--status-disabled);
-  }
+:host(.ui-badge--disabled) {
+  background: var(--muted);
+  color: var(--status-disabled);
+}
 
-  &--neutral {
-    background: var(--muted);
-    color: var(--muted-foreground);
-  }
+:host(.ui-badge--neutral) {
+  background: var(--muted);
+  color: var(--muted-foreground);
 }

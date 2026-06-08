@@ -2,9 +2,9 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "app",
+      "name": "remote",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["start"],
+      "runtimeArgs": ["start", "--", "--configuration", "production"],
       "port": 4200
     }
   ]
